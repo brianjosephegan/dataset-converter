@@ -24,4 +24,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataSetConverter\DataSetConverter.csproj" />
+  </ItemGroup>
+
 </Project>
