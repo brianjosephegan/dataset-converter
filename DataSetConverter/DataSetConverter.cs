@@ -7,12 +7,27 @@ namespace DataSetConverter
     {
         public override DataSet? ReadJson(JsonReader reader, Type objectType, DataSet? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var dataSet = new DataSet();
+
+            do
+            {
+                if (reader.Path == nameof(DataSet.DataSetName))
+                {
+                    dataSet.DataSetName = reader.ReadAsString();
+                }
+            } while (reader.Read());
+
+            return dataSet;
         }
 
         public override void WriteJson(JsonWriter writer, DataSet? value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartObject();
+
+            writer.WritePropertyName(nameof(DataSet.DataSetName));
+            writer.WriteValue(value.DataSetName);
+
+            writer.WriteEndObject();
         }
     }
 }

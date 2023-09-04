@@ -10,7 +10,10 @@ namespace DataSetConverter.Tests
     {
         private readonly ITestOutputHelper _output;
         private readonly Fixture _fixture = new();
-        private readonly DataSetConverter _converter = new();
+        private readonly JsonSerializerSettings _settings = new()
+        {
+            Converters = new List<JsonConverter>() { new DataSetConverter() }
+        };
 
         public DataSetConverterTests(ITestOutputHelper output)
         {
@@ -22,11 +25,11 @@ namespace DataSetConverter.Tests
         {
             var expected = new DataSet(dataSetName: _fixture.Create<string>());
 
-            var json = JsonConvert.SerializeObject(expected, _converter);
+            var json = JsonConvert.SerializeObject(expected, _settings);
 
             _output.WriteLine($"JSON: {json}");
 
-            var actual = JsonConvert.DeserializeObject<DataSet>(json, _converter);
+            var actual = JsonConvert.DeserializeObject<DataSet>(json, _settings);
 
             actual.DataSetName.Should().Be(expected.DataSetName);
         }
