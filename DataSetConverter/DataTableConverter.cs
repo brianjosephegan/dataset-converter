@@ -17,6 +17,10 @@ namespace DataSetConverter
                 {
                     dataTable.TableName = reader.ReadAsString();
                 }
+                else if (reader.Path == nameof(DataTable.Namespace))
+                {
+                    dataTable.Namespace = reader.ReadAsString();
+                }
             } while (reader.Read());
 
             return dataTable;
@@ -28,6 +32,9 @@ namespace DataSetConverter
 
             writer.WritePropertyName(nameof(DataTable.TableName));
             writer.WriteValue(value.TableName);
+
+            writer.WritePropertyName(nameof(DataTable.Namespace));
+            writer.WriteValue(value.Namespace);
 
             writer.WriteEndObject();
         }

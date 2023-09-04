@@ -28,6 +28,16 @@
             actual.TableName.Should().Be(_expected.TableName);
         }
 
+        [Fact]
+        public void SerializeDeSerialize_Should_SetNamespace()
+        {
+            _expected.Namespace = _fixture.Create<string>();
+
+            var actual = SerializeRoundTrip(_expected);
+
+            actual.Namespace.Should().Be(_expected.Namespace);
+        }
+
         private DataTable SerializeRoundTrip(DataTable dataTable)
         {
             var json = JsonConvert.SerializeObject(dataTable, _settings);
