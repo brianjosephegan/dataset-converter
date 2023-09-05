@@ -5,7 +5,7 @@ namespace DataSetConverter
 {
     public class DataTableConverter : JsonConverter<DataTable>
     {
-        public override DataTable? ReadJson(JsonReader reader, Type objectType, DataTable? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override DataTable? ReadJson(JsonReader reader, Type objectType, DataTable existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var dataTable = new DataTable();
 
@@ -26,7 +26,7 @@ namespace DataSetConverter
             return dataTable;
         }
 
-        public override void WriteJson(JsonWriter writer, DataTable? value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, DataTable value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
 
