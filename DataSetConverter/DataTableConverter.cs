@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Data;
 
 namespace DataSetConverter
@@ -24,6 +25,14 @@ namespace DataSetConverter
                 {
                     dataTable.Namespace = reader.ReadAsString();
                 }
+                else if (reader.Path == nameof(DataTable.ExtendedProperties))
+                {
+                    var extendedProperties = serializer.Deserialize<PropertyCollection>(reader);
+                    foreach (DictionaryEntry extendedProperty in extendedProperties)
+                    {
+                        dataTable.ExtendedProperties.Add(extendedProperty.Key, extendedProperty.Value);
+                    }
+                }
             }
 
             return dataTable;
@@ -38,6 +47,9 @@ namespace DataSetConverter
 
             writer.WritePropertyName(nameof(DataTable.Namespace));
             writer.WriteValue(value.Namespace);
+
+            writer.WritePropertyName(nameof(DataTable.ExtendedProperties));
+            serializer.Serialize(writer, value.ExtendedProperties, typeof(PropertyCollection));
 
             writer.WriteEndObject();
         }

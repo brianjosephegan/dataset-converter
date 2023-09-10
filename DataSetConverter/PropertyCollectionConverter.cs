@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Data;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DataSetConverter
 {
@@ -10,16 +9,27 @@ namespace DataSetConverter
         {
             var propertyCollection = new PropertyCollection();
 
+            object key = null;
+
             while (reader.Read())
             {
-                if (reader.TokenType == JsonToken.EndObject)
+                if (reader.TokenType == JsonToken.StartObject)
+                {
+                    continue;
+                }
+                else if (reader.TokenType == JsonToken.EndObject)
                 {
                     break;
                 }
 
-                var key = reader.Value;
-                reader.Read();
-                propertyCollection.Add(key, reader.Value);
+                if (reader.TokenType == JsonToken.PropertyName)
+                {
+                    key = reader.Value;
+                }
+                else
+                {
+                    propertyCollection.Add(key, reader.Value);
+                }
             }
 
             return propertyCollection;

@@ -1,5 +1,6 @@
 ﻿using DataSetConverter.Extensions;
 using Newtonsoft.Json;
+using System.Collections;
 using System.Data;
 
 namespace DataSetConverter
@@ -37,6 +38,14 @@ namespace DataSetConverter
                 {
                     dataColumn.AutoIncrementStep = reader.ReadAsLong();
                 }
+                else if (reader.Path == nameof(DataColumn.ExtendedProperties))
+                {
+                    var extendedProperties = serializer.Deserialize<PropertyCollection>(reader);
+                    foreach (DictionaryEntry extendedProperty in extendedProperties)
+                    {
+                        dataColumn.ExtendedProperties.Add(extendedProperty.Key, extendedProperty.Value);
+                    }
+                }
             }
 
             return dataColumn;
@@ -60,6 +69,9 @@ namespace DataSetConverter
 
             writer.WritePropertyName(nameof(DataColumn.AutoIncrementStep));
             writer.WriteValue(value.AutoIncrementStep);
+
+            writer.WritePropertyName(nameof(DataColumn.ExtendedProperties));
+            serializer.Serialize(writer, value.ExtendedProperties, typeof(PropertyCollection));
 
             writer.WriteEndObject();
         }
