@@ -25,7 +25,7 @@ namespace DataSetConverter.Tests
         {
             _expected.Clear();
 
-            var actual = _expected.SerializeDeserialize(_output, _settings);
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
 
             actual.Should().BeEquivalentTo(_expected);
         }
@@ -38,7 +38,7 @@ namespace DataSetConverter.Tests
             _expected.Add(_fixture.Create<string>(), _fixture.Create<double>());
             _expected.Add(_fixture.Create<string>(), _fixture.Create<bool>());
 
-            var actual = _expected.SerializeDeserialize(_output, _settings);
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
 
             actual.Should().BeEquivalentTo(_expected);
         }

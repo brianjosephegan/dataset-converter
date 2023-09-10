@@ -25,7 +25,7 @@ namespace DataSetConverter.Tests
         {
             _expected.DataSetName = _fixture.Create<string>();
 
-            var actual = _expected.SerializeDeserialize(_output, _settings);
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
 
             actual.DataSetName.Should().Be(_expected.DataSetName);
         }
@@ -35,7 +35,7 @@ namespace DataSetConverter.Tests
         {
             _expected.Namespace = _fixture.Create<string>();
 
-            var actual = _expected.SerializeDeserialize(_output, _settings);
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
 
             actual.Namespace.Should().Be(_expected.Namespace);
         }

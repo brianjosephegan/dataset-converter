@@ -25,9 +25,19 @@ namespace DataSetConverter.Tests
         {
             _expected.ColumnName = _fixture.Create<string>();
 
-            var actual = _expected.SerializeDeserialize(_output, _settings);
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
 
             actual.ColumnName.Should().Be(_expected.ColumnName);
+        }
+
+        [Fact]
+        public void SerializeDeserialize_Should_SetExpression()
+        {
+            _expected.Expression = _fixture.Create<string>();
+
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
+
+            actual.Expression.Should().Be(_expected.Expression);
         }
     }
 }
