@@ -9,9 +9,12 @@ namespace DataSetConverter
         {
             var dataTable = new DataTable();
 
-            do
+            while (reader.Read())
             {
-                System.Diagnostics.Debug.WriteLine(reader.Path);
+                if (reader.TokenType == JsonToken.EndObject)
+                {
+                    break;
+                }
 
                 if (reader.Path == nameof(DataTable.TableName))
                 {
@@ -21,7 +24,7 @@ namespace DataSetConverter
                 {
                     dataTable.Namespace = reader.ReadAsString();
                 }
-            } while (reader.Read());
+            }
 
             return dataTable;
         }

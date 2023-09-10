@@ -1,6 +1,8 @@
-﻿namespace DataSetConverter.Tests
+﻿using DataSetConverter.Tests.Extensions;
+
+namespace DataSetConverter.Tests
 {
-    internal class DataColumnConverterTests
+    public class DataColumnConverterTests
     {
         private readonly ITestOutputHelper _output;
         private readonly DataColumn _expected = new();
@@ -9,7 +11,7 @@
         {
             Converters = new List<JsonConverter>()
             {
-                new DataTableConverter(),
+                new DataColumnConverter(),
             }
         };
 
@@ -18,11 +20,14 @@
             _output = output;
         }
 
-        private DataTable SerializeRoundTrip(DataTable dataTable)
+        [Fact]
+        public void SerializeDeserialize_Should_SetColumnName()
         {
-            var json = JsonConvert.SerializeObject(dataTable, _settings);
-            _output.WriteLine($"JSON: {json}");
-            return JsonConvert.DeserializeObject<DataTable>(json, _settings);
+            _expected.ColumnName = _fixture.Create<string>();
+
+            var actual = _expected.SerializeDeserialize(_output, _settings);
+
+            actual.ColumnName.Should().Be(_expected.ColumnName);
         }
     }
 }
