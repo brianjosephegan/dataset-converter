@@ -1,4 +1,6 @@
-﻿namespace DataSetConverter.Tests
+﻿using DataSetConverter.Tests.Extensions;
+
+namespace DataSetConverter.Tests
 {
     public class PropertyCollectionConverterTests
     {
@@ -23,7 +25,7 @@
         {
             _expected.Clear();
 
-            var actual = SerializeRoundTrip(_expected);
+            var actual = _expected.SerializeDeserialize(_output, _settings);
 
             actual.Should().BeEquivalentTo(_expected);
         }
@@ -36,16 +38,9 @@
             _expected.Add(_fixture.Create<string>(), _fixture.Create<double>());
             _expected.Add(_fixture.Create<string>(), _fixture.Create<bool>());
 
-            var actual = SerializeRoundTrip(_expected);
+            var actual = _expected.SerializeDeserialize(_output, _settings);
 
             actual.Should().BeEquivalentTo(_expected);
-        }
-
-        private PropertyCollection SerializeRoundTrip(PropertyCollection propertyCollection)
-        {
-            var json = JsonConvert.SerializeObject(propertyCollection, _settings);
-            _output.WriteLine($"JSON: {json}");
-            return JsonConvert.DeserializeObject<PropertyCollection>(json, _settings);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace DataSetConverter.Tests
+﻿using DataSetConverter.Tests.Extensions;
+
+namespace DataSetConverter.Tests
 {
     public class DataTableConverterTests
     {
@@ -23,7 +25,7 @@
         {
             _expected.TableName = _fixture.Create<string>();
 
-            var actual = SerializeRoundTrip(_expected);
+            var actual = _expected.SerializeDeserialize(_output, _settings);
 
             actual.TableName.Should().Be(_expected.TableName);
         }
@@ -33,16 +35,9 @@
         {
             _expected.Namespace = _fixture.Create<string>();
 
-            var actual = SerializeRoundTrip(_expected);
+            var actual = _expected.SerializeDeserialize(_output, _settings);
 
             actual.Namespace.Should().Be(_expected.Namespace);
-        }
-
-        private DataTable SerializeRoundTrip(DataTable dataTable)
-        {
-            var json = JsonConvert.SerializeObject(dataTable, _settings);
-            _output.WriteLine($"JSON: {json}");
-            return JsonConvert.DeserializeObject<DataTable>(json, _settings);
         }
     }
 }
