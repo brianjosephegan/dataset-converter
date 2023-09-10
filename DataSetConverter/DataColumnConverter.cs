@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DataSetConverter.Extensions;
+using Newtonsoft.Json;
 using System.Data;
 
 namespace DataSetConverter
@@ -20,6 +21,22 @@ namespace DataSetConverter
                 {
                     dataColumn.ColumnName = reader.ReadAsString();
                 }
+                else if (reader.Path == nameof(DataColumn.AllowDBNull))
+                {
+                    dataColumn.AllowDBNull = reader.ReadAsBoolean().GetValueOrDefault();
+                }
+                else if (reader.Path == nameof(DataColumn.AutoIncrement))
+                {
+                    dataColumn.AutoIncrement = reader.ReadAsBoolean().GetValueOrDefault();
+                }
+                else if (reader.Path == nameof(DataColumn.AutoIncrementSeed))
+                {
+                    dataColumn.AutoIncrementSeed = reader.ReadAsLong();
+                }
+                else if (reader.Path == nameof(DataColumn.AutoIncrementStep))
+                {
+                    dataColumn.AutoIncrementStep = reader.ReadAsLong();
+                }
             }
 
             return dataColumn;
@@ -31,6 +48,18 @@ namespace DataSetConverter
 
             writer.WritePropertyName(nameof(DataColumn.ColumnName));
             writer.WriteValue(value.ColumnName);
+
+            writer.WritePropertyName(nameof(DataColumn.AllowDBNull));
+            writer.WriteValue(value.AllowDBNull);
+
+            writer.WritePropertyName(nameof(DataColumn.AutoIncrement));
+            writer.WriteValue(value.AutoIncrement);
+
+            writer.WritePropertyName(nameof(DataColumn.AutoIncrementSeed));
+            writer.WriteValue(value.AutoIncrementSeed);
+
+            writer.WritePropertyName(nameof(DataColumn.AutoIncrementStep));
+            writer.WriteValue(value.AutoIncrementStep);
 
             writer.WriteEndObject();
         }

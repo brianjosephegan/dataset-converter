@@ -31,13 +31,43 @@ namespace DataSetConverter.Tests
         }
 
         [Fact]
-        public void SerializeDeserialize_Should_SetExpression()
+        public void SerializeDeserialize_Should_SetAllowDBNull()
         {
-            _expected.Expression = _fixture.Create<string>();
+            _expected.AllowDBNull = _fixture.Create<bool>();
 
             var actual = _expected.SerializeDeSerialize(_output, _settings);
 
-            actual.Expression.Should().Be(_expected.Expression);
+            actual.AllowDBNull.Should().Be(_expected.AllowDBNull);
+        }
+
+        [Fact]
+        public void SerializeDeserialize_Should_SetAutoIncrement()
+        {
+            _expected.AutoIncrement = _fixture.Create<bool>();
+
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
+
+            actual.AutoIncrement.Should().Be(_expected.AutoIncrement);
+        }
+
+        [Fact]
+        public void SerializeDeserialize_Should_SetAutoIncrementSeed()
+        {
+            _expected.AutoIncrementSeed = _fixture.Create<long>();
+
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
+
+            actual.AutoIncrementSeed.Should().Be(_expected.AutoIncrementSeed);
+        }
+
+        [Fact]
+        public void SerializeDeserialize_Should_SetAutoIncrementStep()
+        {
+            _expected.AutoIncrementStep = _fixture.Create<long>();
+
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
+
+            actual.AutoIncrementStep.Should().Be(_expected.AutoIncrementStep);
         }
     }
 }
