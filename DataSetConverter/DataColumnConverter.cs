@@ -18,7 +18,11 @@ namespace DataSetConverter
                     break;
                 }
 
-                if (reader.Path == nameof(DataColumn.ColumnName))
+                if (reader.Path == nameof(DataColumn.Caption))
+                {
+                    dataColumn.Caption = reader.ReadAsString();
+                }
+                else if (reader.Path == nameof(DataColumn.ColumnName))
                 {
                     dataColumn.ColumnName = reader.ReadAsString();
                 }
@@ -54,6 +58,9 @@ namespace DataSetConverter
         public override void WriteJson(JsonWriter writer, DataColumn value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
+
+            writer.WritePropertyName(nameof(DataColumn.Caption));
+            writer.WriteValue(value.Caption);
 
             writer.WritePropertyName(nameof(DataColumn.ColumnName));
             writer.WriteValue(value.ColumnName);

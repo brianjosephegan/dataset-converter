@@ -22,6 +22,16 @@ namespace DataSetConverter.Tests
         }
 
         [Fact]
+        public void SerializeDeserialize_Should_SetCaption()
+        {
+            _expected.Caption = _fixture.Create<string>();
+
+            var actual = _expected.SerializeDeSerialize(_output, _settings);
+
+            actual.Caption.Should().Be(_expected.Caption);
+        }
+
+        [Fact]
         public void SerializeDeserialize_Should_SetColumnName()
         {
             _expected.ColumnName = _fixture.Create<string>();
