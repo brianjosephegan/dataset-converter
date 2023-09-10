@@ -12,7 +12,11 @@ namespace DataSetConverter
 
             while (reader.Read())
             {
-                if (reader.TokenType == JsonToken.EndObject)
+                if (reader.TokenType == JsonToken.StartObject)
+                {
+                    continue;
+                }
+                else if (reader.TokenType == JsonToken.EndObject)
                 {
                     break;
                 }
@@ -47,14 +51,6 @@ namespace DataSetConverter
 
             writer.WritePropertyName(nameof(DataSet.Namespace));
             writer.WriteValue(value.Namespace);
-
-            writer.WritePropertyName(nameof(DataSet.Tables));
-            writer.WriteStartArray();
-            for (var i = 0; i < value.Tables.Count; i++)
-            {
-                serializer.Serialize(writer, value.Tables[i], typeof(DataTable));
-            }
-            writer.WriteEndArray();
 
             writer.WritePropertyName(nameof(DataSet.ExtendedProperties));
             serializer.Serialize(writer, value.ExtendedProperties, typeof(PropertyCollection));

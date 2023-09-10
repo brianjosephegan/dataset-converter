@@ -12,7 +12,11 @@ namespace DataSetConverter
 
             while (reader.Read())
             {
-                if (reader.TokenType == JsonToken.EndObject)
+                if (reader.TokenType == JsonToken.StartObject)
+                {
+                    continue;
+                }
+                else if (reader.TokenType == JsonToken.EndObject)
                 {
                     break;
                 }
