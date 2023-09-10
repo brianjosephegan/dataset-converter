@@ -5,7 +5,7 @@ namespace DataSetConverter
 {
     public class DataTableConverter : JsonConverter<DataTable>
     {
-        public override DataTable? ReadJson(JsonReader reader, Type objectType, DataTable existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override DataTable ReadJson(JsonReader reader, Type objectType, DataTable existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var dataTable = new DataTable();
 
